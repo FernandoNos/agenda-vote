@@ -1,0 +1,76 @@
+buildscript {
+    ext {
+        springBootVersion = '2.0.4.RELEASE'
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+apply plugin: 'io.spring.dependency-management'
+apply plugin: "jacoco"
+
+bootJar {
+    baseName = 'agenda-prod'
+    version =  '1.0'
+}
+
+group = 'com.sicredi.exercise'
+version = '1.0'
+sourceCompatibility = 1.8
+
+
+repositories {
+    mavenCentral()
+}
+
+
+
+testClasses{
+    enabled = false
+}
+
+test{
+    enabled = false
+}
+
+dependencies {
+
+    compile('org.springframework.boot:spring-boot-starter-web')
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+    dependencies { testCompile "org.mockito:mockito-core:1.+" }
+    compile('org.springframework.boot:spring-boot-starter-data-mongodb')
+
+
+    //[In Memory MongoDB]
+    compile('de.flapdoodle.embed:de.flapdoodle.embed.mongo')
+
+}
+
+jar {
+    manifest {
+        attributes(
+                'Main-Class': 'app.App',
+                "Class-Path": configurations.compile.collect { it.getName() }.join(' ')
+        )
+    }
+    //from {configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }}
+    //with jar
+    enabled = true
+}
+
+jacocoTestReport {
+    group = "Reporting"
+    reports {
+        xml.enabled true
+        csv.enabled false
+        html.destination "${buildDir}/reports/coverage"
+    }
+}

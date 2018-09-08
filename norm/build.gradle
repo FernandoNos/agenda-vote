@@ -32,15 +32,6 @@ repositories {
 }
 
 
-
-testClasses{
-    enabled = false
-}
-
-test{
-    enabled = false
-}
-
 dependencies {
 
     compile('org.springframework.boot:spring-boot-starter-web')

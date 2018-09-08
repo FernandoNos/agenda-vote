@@ -19,7 +19,7 @@ public class AgendaController {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public Message update(@PathVariable("id") String id, @RequestParam("duration") int duration) {
+    public Message update(@PathVariable("id") String id, @RequestParam(value = "duration", defaultValue = "1", required = true) int duration) {
         return boFacade.setDuration(id, duration);
     }
 
@@ -27,6 +27,7 @@ public class AgendaController {
     public Message vote(@PathVariable("id") String id, @RequestParam(value = "associate_id", required = true) String associateId,
                         @RequestParam(value = "vote", required = true) VoteCode voteCode){
        return boFacade.vote(id,associateId,voteCode);
+
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)

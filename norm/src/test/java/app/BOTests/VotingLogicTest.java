@@ -44,6 +44,50 @@ public class VotingLogicTest {
     }
 
     @Test
+    public void negative_voting_not_started() {
+
+        associates = new ArrayList<Associate>();
+
+        Associate associate = new Associate();
+        associate.setName("Associate : Voting Not Started");
+        Message ms = boFacade.create(associate);
+        associate = (Associate)boFacade.create(associate).getObject();
+
+        Agenda agenda = new Agenda();
+        agenda.setCreationDate(new Date());
+        agenda.setTitle("Agenda : Voting Not Started");
+        agenda.setDescription("Voting Not Started");
+        agenda = (Agenda)boFacade.create(agenda).getObject();
+
+        Message message = boFacade.vote(agenda.getId(),associate.getId(),VoteCode.NO);
+        assertEquals(message.getCode(), TransactionCode.VOTING_NOT_STARTED.getCode());
+    }
+
+    @Test
+    public void negative_volte_already_closed() {
+
+        associates = new ArrayList<Associate>();
+
+        Associate associate = new Associate();
+        associate.setName("Associate : Voting Not Started");
+        Message ms = boFacade.create(associate);
+        associate = (Associate)boFacade.create(associate).getObject();
+
+        Agenda agenda = new Agenda();
+        agenda.setCreationDate(new Date());
+        agenda.setTitle("Agenda : Voting Not Started");
+        agenda.setDescription("Voting Not Started");
+        boFacade.create(agenda).getObject();
+        agenda = (Agenda)boFacade.setDuration(agenda.getId(), 1).getObject();
+        try {
+            Thread.sleep(60000);
+        }catch(Exception e){e.printStackTrace();}
+
+        Message message = boFacade.vote(agenda.getId(),associate.getId(),VoteCode.NO);
+        assertEquals(message.getCode(), TransactionCode.VOTING_COMPLETED.getCode());
+    }
+
+    @Test
     public void positive_vote(){
 
         for(Agenda agenda : agendas){
@@ -76,6 +120,7 @@ public class VotingLogicTest {
             }
         }
     }
+
     @Test
     public void negative_already_voted(){
         createData();

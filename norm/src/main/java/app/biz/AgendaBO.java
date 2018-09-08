@@ -3,10 +3,7 @@ package app.biz;
 
 import app.enums.TransactionCode;
 import app.enums.VoteCode;
-import app.exceptions.AgendaClosedForVotingException;
-import app.exceptions.AgendaNotFoundException;
-import app.exceptions.AssociateNotFoundException;
-import app.exceptions.DurationAlreadySetException;
+import app.exceptions.*;
 import app.model.*;
 import app.repositories.AgendaRepository;
 import app.utils.DateHandler;
@@ -65,7 +62,7 @@ public class AgendaBO {
         return agenda;
     }
 
-    public Agenda vote(String agendaId, String associateId, VoteCode vote) throws AgendaClosedForVotingException, AssociateNotFoundException, AgendaNotFoundException, IllegalArgumentException{
+    public Agenda vote(String agendaId, String associateId, VoteCode vote) throws AgendaNotOpened, AgendaClosedForVotingException, AssociateNotFoundException, AgendaNotFoundException, IllegalArgumentException{
         LOG.info(CLASS_NAME+" - Request to register vote Agenda id"+agendaId+" ,associate "+associateId+", Vote "+vote);
         Agenda agenda = agendaRepository.findById(agendaId);
         if(agenda==null){
@@ -79,10 +76,13 @@ public class AgendaBO {
             agenda.addVote(associateId,vote);
             agendaRepository.save(agenda);
         }
+        else {
+            throw new AgendaClosedForVotingException(TransactionCode.VOTING_COMPLETED.getMessage());
+        }
         return agenda;
     }
 
-    public VotingResult countVotes(String agendaId) throws AgendaNotFoundException{
+    public VotingResult countVotes(String agendaId) throws AgendaNotFoundException, AgendaNotOpened{
         LOG.info(CLASS_NAME+" - Received request to count votes for Agenda :"+agendaId);
 
         Agenda agenda = agendaRepository.findById(agendaId);
@@ -104,12 +104,15 @@ public class AgendaBO {
 
 
 
-    private boolean isOpenForVotes(Agenda agenda) {
+    private boolean isOpenForVotes(Agenda agenda) throws AgendaNotOpened{
 
         Date durationDate = DateHandler.addMinute(agenda.getCreationDate(), agenda.getDuration());
         Date currentDate = new Date();
 
-         return (durationDate.compareTo(currentDate)==1 && agenda.getDuration()!=0);
+        if(agenda.getDuration()==0)
+            throw new AgendaNotOpened(TransactionCode.VOTING_NOT_STARTED.getMessage(agenda.getId(), agenda.getTitle()));
+
+         return (durationDate.compareTo(currentDate)==1);
 
     }
     private boolean validateAssociate(String associateId) throws AssociateNotFoundException {

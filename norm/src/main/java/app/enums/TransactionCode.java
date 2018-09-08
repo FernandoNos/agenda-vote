@@ -12,7 +12,8 @@ public enum TransactionCode {
     ALREADY_VOTED(7, "You may only vote once, Associate %s!"),
     ERROR (-100,"An Error happened! Please reach out to your System Administrator!"),
     DURATION_ALREADY_SET(3, "You MAY NOT reset the duration of an Agenda (%s - %s)!"),
-    VOTING_NOT_COMPLETED(4, "The Agenda %s - %s is still open for voting!")
+    VOTING_NOT_COMPLETED(4, "The Agenda %s - %s is still open for voting!"),
+    VOTING_NOT_STARTED(5, "Voting hasn't started for Agenda id %s - %s")
     ;
     ;
 
@@ -21,13 +22,6 @@ public enum TransactionCode {
 
     private TransactionCode(int code, String message){
         this.code = code;
-        this.message = message;
-    }
-
-    public void setCode(TransactionCode transactionCode){
-        this.code = transactionCode.getCode();
-    }
-    public void setMessage(String messagae){
         this.message = message;
     }
 

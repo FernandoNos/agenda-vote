@@ -4,10 +4,7 @@ import app.biz.AgendaBO;
 import app.biz.AssociateBO;
 import app.enums.TransactionCode;
 import app.enums.VoteCode;
-import app.exceptions.AgendaClosedForVotingException;
-import app.exceptions.AgendaNotFoundException;
-import app.exceptions.AssociateNotFoundException;
-import app.exceptions.DurationAlreadySetException;
+import app.exceptions.*;
 import app.model.Agenda;
 import app.model.Associate;
 import app.model.Message;
@@ -69,8 +66,9 @@ public class BOFacade {
     public Message setDuration(String id, int duration){
         Message message = new Message();
         try {
-             agendaBO.setDuration(id, duration);
+             Agenda agenda = agendaBO.setDuration(id, duration);
              message.setMessage(TransactionCode.SUCCESS);
+             message.setObject(agenda);
         }
         catch(AgendaNotFoundException e){
             message.setMessage(e.getMessage());
@@ -95,6 +93,9 @@ public class BOFacade {
         }catch(AgendaNotFoundException e){
             message.setMessage(e.getMessage());
             message.setErrorId(TransactionCode.AGENDA_NOT_FOUND.getCode());
+        }catch(AgendaNotOpened e){
+            message.setMessage(e.getMessage());
+            message.setErrorId(TransactionCode.VOTING_NOT_STARTED.getCode());
         }catch(AgendaClosedForVotingException e){
             message.setMessage(e.getMessage());
             message.setErrorId(TransactionCode.VOTING_COMPLETED.getCode());
@@ -121,6 +122,9 @@ public class BOFacade {
             message.setMessage(e.getMessage());
         }catch(AgendaNotFoundException e){
             message.setMessage(TransactionCode.ERROR.AGENDA_NOT_FOUND);
+            message.setMessage(e.getMessage());
+        }catch(AgendaNotOpened e ){
+            message.setMessage(TransactionCode.VOTING_NOT_STARTED);
             message.setMessage(e.getMessage());
         }catch(Exception e){
             message.setMessage(TransactionCode.ERROR);

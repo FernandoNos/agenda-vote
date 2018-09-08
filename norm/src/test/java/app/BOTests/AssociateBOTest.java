@@ -37,7 +37,7 @@ public class AssociateBOTest {
             Associate aux = new Associate();
             aux.setName("Associate "+i);
             Message ms =  boFacade.create(aux);
-            associates.add((Associate)ms.geteObject());
+            associates.add((Associate)ms.getObject());
         }
     }
 

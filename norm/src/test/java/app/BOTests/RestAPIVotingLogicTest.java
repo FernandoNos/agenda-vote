@@ -1,16 +1,15 @@
 package app.BOTests;
 
 import app.enums.TransactionCode;
-import app.enums.VoteCode;
 import app.model.Agenda;
 import app.model.Associate;
 import app.model.Message;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
@@ -22,8 +21,7 @@ import org.springframework.test.web.servlet.ResultActions;
 import java.util.LinkedHashMap;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
-import static org.hamcrest.CoreMatchers.containsString;
+
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -36,6 +34,8 @@ public class RestAPIVotingLogicTest {
 
     @Autowired
     private MockMvc mockMvc;
+    private final Logger LOG = LoggerFactory.getLogger(this.getClass());
+
 
 
     @Test
@@ -70,7 +70,7 @@ public class RestAPIVotingLogicTest {
             Thread.sleep(60 * 1000);
         }catch(Exception e)
         {
-            e.printStackTrace();
+            LOG.error(e.getMessage());
         }
 
         result = getResults(agenda.getId());
@@ -102,7 +102,7 @@ public class RestAPIVotingLogicTest {
             result = response.getContentAsString();
             message = convertStringToMessage(result);
         } catch (Exception e) {
-            e.printStackTrace();
+            LOG.error(e.getMessage());
             message = null;
         }
         return message;
@@ -128,7 +128,7 @@ public class RestAPIVotingLogicTest {
             result = response.getContentAsString();
             message = convertStringToMessage(result);
         } catch (Exception e) {
-            e.printStackTrace();
+            LOG.error(e.getMessage());
             message = null;
         }
         return message;
@@ -153,7 +153,7 @@ public class RestAPIVotingLogicTest {
             result = response.getContentAsString();
             message = convertStringToMessage(result);
         } catch (Exception e) {
-            e.printStackTrace();
+            LOG.error(e.getMessage());
             message = null;
         }
         return message;
@@ -177,7 +177,7 @@ public class RestAPIVotingLogicTest {
             result = response.getContentAsString();
             message = convertStringToMessage(result);
         } catch (Exception e) {
-            e.printStackTrace();
+            LOG.error(e.getMessage());
             message = null;
         }
         return message;
@@ -203,7 +203,7 @@ public class RestAPIVotingLogicTest {
             message = convertStringToMessage(result);
             return message;
         } catch (Exception e) {
-            e.printStackTrace();
+            LOG.error(e.getMessage());
             result = "ERROR";
         }
         return message;
@@ -216,7 +216,7 @@ public class RestAPIVotingLogicTest {
 
             message = objectMapper.readValue(json, Message.class);
         }catch(Exception e){
-            e.printStackTrace();
+            LOG.error(e.getMessage());
         }
         return message;
 

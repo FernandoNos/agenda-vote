@@ -11,6 +11,8 @@ import app.model.Agenda;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.stereotype.Component;
@@ -29,7 +31,7 @@ import static org.junit.Assert.assertTrue;
 @Component
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
 public class VotingLogicTest {
-
+    private final Logger LOG = LoggerFactory.getLogger(this.getClass());
     private List<Associate> associates;
     private List<Agenda> agendas;
 
@@ -81,7 +83,7 @@ public class VotingLogicTest {
         agenda = (Agenda)boFacade.setDuration(agenda.getId(), 1).getObject();
         try {
             Thread.sleep(60000);
-        }catch(Exception e){e.printStackTrace();}
+        }catch(Exception e){LOG.error(e.getMessage());}
 
         Message message = boFacade.vote(agenda.getId(),associate.getId(),VoteCode.NO);
         assertEquals(message.getCode(), TransactionCode.VOTING_COMPLETED.getCode());

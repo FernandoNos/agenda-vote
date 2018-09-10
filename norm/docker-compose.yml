@@ -7,7 +7,7 @@ services:
     restart: always
     container_name: springboot-agenda
     ports:
-      - 8182:8080
+      - 8182:8090
     working_dir: /opt/app
     depends_on:
       - mongo

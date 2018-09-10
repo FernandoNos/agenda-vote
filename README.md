@@ -190,3 +190,4 @@ Como dito anteriormente, para os testes foram utilizados JUnit e Jacoco, para im
 
 ## Pendente
 * Revisão dos logs e possível melhoria de mapeamento de cenários em logs.
+* Durante o desenvolvimento, foi notado que a nomenclatura para a estrutura do projeto (nome do projeto e estrutura de pacotes) não havia sido a ideal, sendo então interessante a revisão da mesma.

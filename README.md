@@ -178,9 +178,13 @@ INVALID_ASSOCIATE Código: 13 - Descrição: Associate MUST have a Name
 
 7. Tendo sido feita a inicialização com sucesso, as interfaces estarão disponíveis nas URLs abaixo:
 -POST: http://localhost:8183/agenda/
+
 -PUT: http://localhost:8183/agenda/<Id da Agenda>?duration=5
+
 -PUT: http://localhost:8183/agenda/<Id da Agenda >?duration=5
+
 -PUT: http://localhost:8182/agenda/<Id da Agenda>/vote?associate_id=<Id do associate>&vote=YES
+
 -GET: http://localhost:8183/agenda/<Id da Agenda>/result
   
 ## Relatório de testes

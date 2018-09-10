@@ -26,6 +26,9 @@ public class AgendaBO {
     public Agenda create(Agenda agenda) throws Exception{
 
         LOG.info(CLASS_NAME+" - Request to create Agenda "+agenda);
+
+        if(agenda.getTitle() == null || agenda.getTitle().equals("") || agenda.getDescription()==null || agenda.getDescription().equals(""))
+            throw new IllegalArgumentException(TransactionCode.INVALID_AGENDA.getMessage());
         Agenda newAgenda = null;
         agenda.setCreationDate(new Date());
         newAgenda = agendaRepository.save(agenda);

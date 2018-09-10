@@ -29,6 +29,9 @@ public class BOFacade {
              Agenda newAgenda = agendaBO.create(agenda);
              message.setMessage(TransactionCode.SUCCESS);
              message.setObject(newAgenda);
+        }catch(IllegalArgumentException e){
+            message.setMessage(e.getMessage());
+            message.setErrorId(TransactionCode.INVALID_AGENDA.getCode());
         }catch(Exception e){
             message.setMessage(TransactionCode.ERROR);
         }
@@ -41,6 +44,9 @@ public class BOFacade {
             Associate newAssociate = associateBO.create(associate);
             message.setMessage(TransactionCode.SUCCESS);
             message.setObject(newAssociate);
+        }catch(IllegalArgumentException e ){
+            message.setMessage(e.getMessage());
+            message.setErrorId(TransactionCode.INVALID_ASSOCIATE.getCode());
         }catch(Exception e){
             message.setMessage(e.getMessage());
         }

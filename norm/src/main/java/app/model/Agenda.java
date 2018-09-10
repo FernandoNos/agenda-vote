@@ -2,9 +2,6 @@ package app.model;
 import app.enums.VoteCode;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.data.annotation.Id;
-import org.springframework.stereotype.Component;
-
-import java.time.ZonedDateTime;
 import java.util.*;
 
 
@@ -12,11 +9,11 @@ public class Agenda {
 
     @Id
     private String id;
-    @JsonProperty("norm_description")
+    @JsonProperty(value = "agenda_description", required = true)
     private String description;
-    @JsonProperty("norm_title")
+    @JsonProperty(value = "agenda_title", required = true)
     private String title;
-    @JsonProperty("norm_duration")
+    @JsonProperty("agenda_duration")
     private int duration = 0;
     private Map<VoteCode, HashSet<String>> votes;
     private Date creationDate;
@@ -68,6 +65,7 @@ public class Agenda {
     public void setCreationDate(Date creationDate){
         this.creationDate = creationDate;
     }
+    public void setId(String id){this.id = id;}
     public Date getCreationDate(){return creationDate;}
     public String getId(){ return id;}
     public String toString(){

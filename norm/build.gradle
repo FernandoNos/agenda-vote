@@ -39,7 +39,6 @@ dependencies {
     dependencies { testCompile "org.mockito:mockito-core:1.+" }
     compile('org.springframework.boot:spring-boot-starter-data-mongodb')
 
-
     //[In Memory MongoDB]
     compile('de.flapdoodle.embed:de.flapdoodle.embed.mongo')
 

@@ -14,7 +14,7 @@ public class AgendaController {
     private BOFacade boFacade;
 
     @RequestMapping(value = "/", method = RequestMethod.POST)
-    public Message add(@RequestBody Agenda agenda) {
+    public Message add(@RequestBody(required = true) Agenda agenda) {
         return boFacade.create(agenda);
     }
 
@@ -30,7 +30,7 @@ public class AgendaController {
 
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{id}/result", method = RequestMethod.GET)
     public Message countVotes (@PathVariable("id") String id){
         return boFacade.countVotes(id);
     }

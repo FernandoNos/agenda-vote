@@ -2,7 +2,6 @@ package app.model;
 
 import app.enums.TransactionCode;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.springframework.stereotype.Component;
 
 
 public  class Message {

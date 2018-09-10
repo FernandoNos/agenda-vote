@@ -13,7 +13,9 @@ public enum TransactionCode {
     ERROR (-100,"An Error happened! Please reach out to your System Administrator!"),
     DURATION_ALREADY_SET(3, "You MAY NOT reset the duration of an Agenda (%s - %s)!"),
     VOTING_NOT_COMPLETED(4, "The Agenda %s - %s is still open for voting!"),
-    VOTING_NOT_STARTED(5, "Voting hasn't started for Agenda id %s - %s")
+    VOTING_NOT_STARTED(5, "Voting hasn't started for Agenda id %s - %s"),
+    INVALID_AGENDA(12, "Agenda MUST have a Title and a Description!"),
+    INVALID_ASSOCIATE(13, "Associate MUST have a Name");
     ;
     ;
 

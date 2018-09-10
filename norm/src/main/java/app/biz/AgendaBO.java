@@ -77,7 +77,7 @@ public class AgendaBO {
             agendaRepository.save(agenda);
         }
         else {
-            throw new AgendaClosedForVotingException(TransactionCode.VOTING_COMPLETED.getMessage());
+            throw new AgendaClosedForVotingException(TransactionCode.VOTING_COMPLETED.getMessage(agenda.getId(), agenda.getTitle(), DateHandler.addMinute(agenda.getCreationDate(),agenda.getDuration()).toString()));
         }
         return agenda;
     }
